@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>NoahRBLX</title>
+  <title>CrypticNoah</title>
 
-  <!-- Icons -->
+  <!-- Feather icons for volume controls -->
   <script src="https://unpkg.com/feather-icons"></script>
 
   <style>
@@ -50,21 +50,44 @@
       margin-bottom: 1.5rem;
     }
 
+    /* SOCIALS (WHITE ONLY) */
     .socials {
       display: flex;
       gap: 1rem;
       margin-bottom: 2rem;
+      align-items: center;
     }
 
-    .socials a {
-      color: #bbb;
-      transition: 0.2s;
-    }
-
-    .socials a:hover {
+    .socials a,
+    .socials button {
       color: #fff;
+      text-decoration: none;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
     }
 
+    .social-chip {
+      border: 1px solid rgba(255,255,255,0.22);
+      background: rgba(0,0,0,0.25);
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 0.95rem;
+      line-height: 1;
+      color: #fff; /* forced white */
+      transition: 0.15s;
+      user-select: none;
+    }
+
+    .social-chip:hover {
+      background: rgba(255,255,255,0.08);
+    }
+
+    /* SKILLS */
     .skills {
       display: flex;
       flex-wrap: wrap;
@@ -76,7 +99,7 @@
       padding: 0.4rem 0.75rem;
       border-radius: 999px;
       font-size: 0.85rem;
-      color: #eee;
+      color: #fff;
       background: rgba(0,0,0,0.45);
       backdrop-filter: blur(6px);
     }
@@ -200,15 +223,84 @@
       width: 18px;
       height: 18px;
       object-fit: contain;
-      /* optional subtle glow */
       filter: drop-shadow(0 0 6px rgba(255,255,255,0.25));
+    }
+
+    /* ROBLOX ACCOUNTS MODAL */
+    .rbx-title {
+      font-size: 1.15rem;
+      margin-bottom: 12px;
+    }
+
+    .rbx-group {
+      margin-bottom: 12px;
+    }
+
+    .rbx-group h3 {
+      font-size: 0.95rem;
+      color: #ddd;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    .rbx-card {
+      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(255,255,255,0.06);
+      padding: 12px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      cursor: pointer;
+      transition: 0.15s;
+      user-select: none;
+      margin-bottom: 8px;
+    }
+
+    .rbx-card:hover {
+      background: rgba(255,255,255,0.10);
+    }
+
+    .rbx-user {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+    }
+
+    .rbx-id {
+      font-size: 0.85rem;
+      color: #bbb;
+    }
+
+    .rbx-name {
+      font-size: 0.98rem;
+      color: #fff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .copy-icon {
+      font-size: 1.1rem;
+      color: #fff;
+      flex: 0 0 auto;
+    }
+
+    .copied-modal {
+      text-align: center;
+    }
+
+    .copied-modal h2 {
+      margin-bottom: 0;
     }
   </style>
 </head>
 
 <body>
 
-  <!-- BACKGROUND MUSIC (put backgroundmusic.mp3 next to index.html) -->
+  <!-- BACKGROUND MUSIC -->
   <audio id="bgMusic" src="backgroundmusic.mp3" preload="auto" loop></audio>
 
   <!-- AUDIO TOGGLE -->
@@ -221,13 +313,10 @@
   <div id="musicModal" class="modal-backdrop">
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="musicTitle">
       <h2 id="musicTitle" class="warning-title">
-        <!-- Put warning.png next to index.html (transparent background) -->
         <img src="warning.png" alt="Warning" class="warning-icon">
         Music Warning
       </h2>
-      <p>
-        This website contains background music. Choose how you’d like to continue.
-      </p>
+      <p>This website contains background music. Choose how you’d like to continue.</p>
       <div class="btn-row">
         <button id="continueMuted" class="btn" type="button">Mute audio &amp; continue</button>
         <button id="continueWithSound" class="btn primary" type="button">Continue</button>
@@ -235,27 +324,83 @@
     </div>
   </div>
 
+  <!-- ROBLOX ACCOUNTS MODAL -->
+  <div id="rbxModalBackdrop" class="modal-backdrop hidden" aria-hidden="true">
+    <div id="rbxModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="rbxTitle">
+      <h2 id="rbxTitle" class="rbx-title">Roblox Accounts</h2>
+
+      <div class="rbx-group">
+        <h3>Main Account</h3>
+        <div class="rbx-card" data-copy="7628397273">
+          <div class="rbx-user">
+            <div class="rbx-id">7628397273</div>
+            <div class="rbx-name">Thuntc5813</div>
+          </div>
+          <div class="copy-icon">📋</div>
+        </div>
+      </div>
+
+      <div class="rbx-group">
+        <h3>Alternative Account</h3>
+        <div class="rbx-card" data-copy="1905831731">
+          <div class="rbx-user">
+            <div class="rbx-id">1905831731</div>
+            <div class="rbx-name">Minecraftlover_il</div>
+          </div>
+          <div class="copy-icon">📋</div>
+        </div>
+
+        <div class="rbx-card" data-copy="1036029278">
+          <div class="rbx-user">
+            <div class="rbx-id">1036029278</div>
+            <div class="rbx-name">MrRjc13</div>
+          </div>
+          <div class="copy-icon">📋</div>
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <button id="rbxCloseBtn" class="btn" type="button">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- COPIED MODAL -->
+  <div id="copiedModalBackdrop" class="modal-backdrop hidden" aria-hidden="true">
+    <div class="modal copied-modal" role="dialog" aria-modal="true" aria-labelledby="copiedTitle">
+      <h2 id="copiedTitle">Copied to clipboard.</h2>
+      <div class="btn-row" style="justify-content:center; margin-top: 14px;">
+        <button id="copiedCloseBtn" class="btn primary" type="button">OK</button>
+      </div>
+    </div>
+  </div>
+
   <!-- MAIN CONTENT -->
   <div class="container">
     <div class="left">
-      <h1>NoahRBLX</h1>
+      <h1>CrypticNoah</h1>
       <p>developer &amp; designer</p>
 
       <div class="socials">
-        <a href="#" aria-label="GitHub"><i data-feather="github"></i></a>
-        <a href="#" aria-label="Instagram"><i data-feather="instagram"></i></a>
-        <a href="#" aria-label="Twitter"><i data-feather="twitter"></i></a>
+        <!-- TikTok -->
+        <a class="social-chip" href="https://www.tiktok.com/@londonguardians" target="_blank" rel="noopener noreferrer">
+          TikTok
+        </a>
+
+        <!-- X -->
+        <a class="social-chip" href="https://x.com/BloxBriefs" target="_blank" rel="noopener noreferrer">
+          X
+        </a>
+
+        <!-- Roblox (opens modal) -->
+        <button id="rbxOpenBtn" class="social-chip" type="button" aria-haspopup="dialog">
+          RBX
+        </button>
       </div>
 
       <div class="skills">
-        <div class="skill">JavaScript</div>
-        <div class="skill">TypeScript</div>
-        <div class="skill">React</div>
+        <div class="skill">Python</div>
         <div class="skill">Node.js</div>
-        <div class="skill">Lua</div>
-        <div class="skill">Roblox</div>
-        <div class="skill">Figma</div>
-        <div class="skill">Linux</div>
       </div>
     </div>
 
@@ -267,8 +412,9 @@
   <script>
     feather.replace();
 
+    // ===== MUSIC CONSENT FLOW =====
     const music = document.getElementById("bgMusic");
-    const modal = document.getElementById("musicModal");
+    const musicModal = document.getElementById("musicModal");
     const toggle = document.getElementById("audioToggle");
     const allowBtn = document.getElementById("continueWithSound");
     const muteBtn = document.getElementById("continueMuted");
@@ -284,29 +430,26 @@
 
     allowBtn.onclick = async () => {
       allowed = true;
-      modal.classList.add("hidden");
+      musicModal.classList.add("hidden");
       toggle.classList.remove("hidden");
 
       music.muted = false;
       music.volume = 0.6;
 
-      try { await music.play(); } catch (e) {
-        // If autoplay still fails, remain muted.
-        music.muted = true;
-      }
+      try { await music.play(); } catch (e) { music.muted = true; }
       updateToggle();
     };
 
     muteBtn.onclick = () => {
       allowed = false;
-      modal.classList.add("hidden");
+      musicModal.classList.add("hidden");
       toggle.classList.remove("hidden");
+
       music.muted = true;
       updateToggle();
     };
 
     toggle.onclick = async () => {
-      // If user previously chose mute, toggling on counts as consent now.
       if (!allowed && music.muted) {
         allowed = true;
         music.muted = false;
@@ -320,9 +463,87 @@
       updateToggle();
     };
 
-    // Default: muted until user clicks
     music.muted = true;
     updateToggle();
+
+    // ===== ROBLOX MODALS + COPY =====
+    const rbxOpenBtn = document.getElementById("rbxOpenBtn");
+    const rbxBackdrop = document.getElementById("rbxModalBackdrop");
+    const rbxModal = document.getElementById("rbxModal");
+    const rbxCloseBtn = document.getElementById("rbxCloseBtn");
+
+    const copiedBackdrop = document.getElementById("copiedModalBackdrop");
+    const copiedCloseBtn = document.getElementById("copiedCloseBtn");
+
+    function openRbxModal() {
+      rbxBackdrop.classList.remove("hidden");
+      rbxBackdrop.setAttribute("aria-hidden", "false");
+    }
+
+    function closeRbxModal() {
+      rbxBackdrop.classList.add("hidden");
+      rbxBackdrop.setAttribute("aria-hidden", "true");
+    }
+
+    function openCopiedModal() {
+      copiedBackdrop.classList.remove("hidden");
+      copiedBackdrop.setAttribute("aria-hidden", "false");
+    }
+
+    function closeCopiedModal() {
+      copiedBackdrop.classList.add("hidden");
+      copiedBackdrop.setAttribute("aria-hidden", "true");
+    }
+
+    rbxOpenBtn.addEventListener("click", openRbxModal);
+    rbxCloseBtn.addEventListener("click", closeRbxModal);
+
+    // Click outside modal closes it
+    rbxBackdrop.addEventListener("click", (e) => {
+      if (!rbxModal.contains(e.target)) closeRbxModal();
+    });
+
+    copiedCloseBtn.addEventListener("click", closeCopiedModal);
+
+    copiedBackdrop.addEventListener("click", (e) => {
+      // clicking anywhere closes copied popup
+      closeCopiedModal();
+    });
+
+    async function copyToClipboard(text) {
+      try {
+        await navigator.clipboard.writeText(text);
+        return true;
+      } catch (err) {
+        // Fallback for older browsers
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        const ok = document.execCommand("copy");
+        document.body.removeChild(ta);
+        return ok;
+      }
+    }
+
+    // Each card copies its user ID, closes account modal, opens copied modal
+    document.querySelectorAll(".rbx-card").forEach(card => {
+      card.addEventListener("click", async () => {
+        const idToCopy = card.getAttribute("data-copy");
+        await copyToClipboard(idToCopy);
+
+        closeRbxModal();
+        openCopiedModal();
+      });
+    });
+
+    // Esc closes modals
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        closeRbxModal();
+        closeCopiedModal();
+      }
+    });
   </script>
 
 </body>
