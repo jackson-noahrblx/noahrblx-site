@@ -155,9 +155,6 @@
     .modal h2 {
       font-size: 1.2rem;
       margin-bottom: 10px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
     }
 
     .modal p {
@@ -192,31 +189,48 @@
       color: #000;
       border-color: #fff;
     }
+
+    /* WARNING ICON IN TITLE */
+    .warning-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .warning-icon {
+      width: 18px;
+      height: 18px;
+      object-fit: contain;
+      /* optional subtle glow */
+      filter: drop-shadow(0 0 6px rgba(255,255,255,0.25));
+    }
   </style>
 </head>
 
 <body>
 
-  <!-- BACKGROUND MUSIC -->
+  <!-- BACKGROUND MUSIC (put backgroundmusic.mp3 next to index.html) -->
   <audio id="bgMusic" src="backgroundmusic.mp3" preload="auto" loop></audio>
 
   <!-- AUDIO TOGGLE -->
-  <button id="audioToggle" class="audio-toggle hidden">
+  <button id="audioToggle" class="audio-toggle hidden" type="button" aria-label="Toggle audio">
     <i data-feather="volume-2"></i>
     <span>Sound</span>
   </button>
 
   <!-- MUSIC WARNING MODAL -->
   <div id="musicModal" class="modal-backdrop">
-    <div class="modal">
-      <h2>⚠️ Music Warning</h2>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="musicTitle">
+      <h2 id="musicTitle" class="warning-title">
+        <!-- Put warning.png next to index.html (transparent background) -->
+        <img src="warning.png" alt="Warning" class="warning-icon">
+        Music Warning
+      </h2>
       <p>
-        This website contains background music.
-        Choose how you’d like to continue.
+        This website contains background music. Choose how you’d like to continue.
       </p>
       <div class="btn-row">
-        <button id="continueMuted" class="btn">Mute audio &amp; continue</button>
-        <button id="continueWithSound" class="btn primary">Continue</button>
+        <button id="continueMuted" class="btn" type="button">Mute audio &amp; continue</button>
+        <button id="continueWithSound" class="btn primary" type="button">Continue</button>
       </div>
     </div>
   </div>
@@ -228,9 +242,9 @@
       <p>developer &amp; designer</p>
 
       <div class="socials">
-        <a href="#"><i data-feather="github"></i></a>
-        <a href="#"><i data-feather="instagram"></i></a>
-        <a href="#"><i data-feather="twitter"></i></a>
+        <a href="#" aria-label="GitHub"><i data-feather="github"></i></a>
+        <a href="#" aria-label="Instagram"><i data-feather="instagram"></i></a>
+        <a href="#" aria-label="Twitter"><i data-feather="twitter"></i></a>
       </div>
 
       <div class="skills">
@@ -272,9 +286,14 @@
       allowed = true;
       modal.classList.add("hidden");
       toggle.classList.remove("hidden");
+
       music.muted = false;
       music.volume = 0.6;
-      try { await music.play(); } catch {}
+
+      try { await music.play(); } catch (e) {
+        // If autoplay still fails, remain muted.
+        music.muted = true;
+      }
       updateToggle();
     };
 
@@ -287,16 +306,21 @@
     };
 
     toggle.onclick = async () => {
+      // If user previously chose mute, toggling on counts as consent now.
       if (!allowed && music.muted) {
         allowed = true;
         music.muted = false;
-        try { await music.play(); } catch {}
+        try { await music.play(); } catch (e) {}
       } else {
         music.muted = !music.muted;
+        if (!music.muted) {
+          try { await music.play(); } catch (e) {}
+        }
       }
       updateToggle();
     };
 
+    // Default: muted until user clicks
     music.muted = true;
     updateToggle();
   </script>
