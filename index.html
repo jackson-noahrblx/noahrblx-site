@@ -3,12 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
   <title>CrypticNoah</title>
 
+  <!-- ===== FAVICONS (UPLOAD FILES TO REPO ROOT) ===== -->
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+
+  <!-- Icons -->
   <script src="https://unpkg.com/feather-icons"></script>
 
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif; }
+    * { box-sizing:border-box; margin:0; padding:0; font-family:system-ui,-apple-system,BlinkMacSystemFont,sans-serif; }
 
     body{
       min-height:100vh; color:#fff; display:flex; align-items:center; justify-content:center;
@@ -37,31 +46,32 @@
       align-items:center;
       justify-content:center;
       cursor:pointer;
-      transition:0.15s;
+      transition:.15s;
       color:#fff;
       text-decoration:none;
       user-select:none;
     }
 
-    .social-icon{ width:40px; height:40px; padding:0; }
+    .social-icon{ width:40px; height:40px; }
     .social-icon:hover, .social-text:hover{ background:rgba(255,255,255,0.08); }
 
     .social-icon img{
       width:18px; height:18px; object-fit:contain;
-      filter: drop-shadow(0 0 0 rgba(0,0,0,0));
     }
 
-    .social-text{ padding:8px 14px; font-size:0.95rem; line-height:1; }
+    .social-icon svg{ width:18px; height:18px; stroke:#fff; }
+
+    .social-text{ padding:8px 14px; font-size:.95rem; }
 
     /* SKILLS */
-    .skills{ display:flex; flex-wrap:wrap; gap:.6rem; }
+    .skills{ display:flex; gap:.6rem; }
     .skill{
       border:1px solid rgba(255,255,255,0.15);
       padding:.4rem .75rem;
       border-radius:999px;
       font-size:.85rem;
       background:rgba(0,0,0,0.45);
-      backdrop-filter: blur(6px);
+      backdrop-filter:blur(6px);
     }
 
     .right{ display:flex; justify-content:center; }
@@ -69,12 +79,11 @@
       width:170px; height:170px; border-radius:50%;
       object-fit:cover;
       border:2px solid rgba(255,255,255,0.2);
-      background:#000;
     }
 
     @media (max-width:768px){
       .container{ grid-template-columns:1fr; text-align:center; }
-      .socials, .skills{ justify-content:center; }
+      .socials,.skills{ justify-content:center; }
     }
 
     /* AUDIO TOGGLE */
@@ -84,13 +93,13 @@
       padding:10px 12px; border-radius:999px;
       border:1px solid rgba(255,255,255,0.2);
       background:rgba(0,0,0,0.6);
-      color:#fff; cursor:pointer; backdrop-filter: blur(8px);
-      user-select:none;
+      color:#fff; cursor:pointer;
+      backdrop-filter:blur(8px);
     }
 
-    .hidden{ display:none !important; }
+    .hidden{ display:none!important; }
 
-    /* MODALS (shared) */
+    /* MODALS */
     .modal-backdrop{
       position:fixed; inset:0; z-index:100;
       background:rgba(0,0,0,0.75);
@@ -105,15 +114,13 @@
       border-radius:18px;
       padding:20px;
       box-shadow:0 20px 60px rgba(0,0,0,0.7);
-      backdrop-filter: blur(10px);
+      backdrop-filter:blur(10px);
     }
 
     .modal h2{ font-size:1.2rem; margin-bottom:10px; }
-    .modal p{ color:#ccc; margin-bottom:16px; line-height:1.4; }
+    .modal p{ color:#ccc; margin-bottom:16px; }
 
-    .btn-row{
-      display:flex; gap:10px; justify-content:flex-end; flex-wrap:wrap;
-    }
+    .btn-row{ display:flex; gap:10px; justify-content:flex-end; flex-wrap:wrap; }
 
     .btn{
       border:1px solid rgba(255,255,255,0.2);
@@ -122,372 +129,101 @@
       padding:10px 14px;
       border-radius:12px;
       cursor:pointer;
-      transition:0.15s;
     }
-    .btn:hover{ background:rgba(255,255,255,0.12); }
-    .btn.primary{ background:#fff; color:#000; border-color:#fff; }
 
-    /* WARNING ICON IN TITLE */
+    .btn.primary{ background:#fff; color:#000; }
+
+    /* WARNING TITLE */
     .warning-title{ display:flex; align-items:center; gap:10px; }
-    .warning-icon{
-      width:18px; height:18px; object-fit:contain;
-      filter: drop-shadow(0 0 6px rgba(255,255,255,0.25));
-    }
+    .warning-icon{ width:18px; height:18px; }
 
-    /* ROBLOX ACCOUNTS MODAL */
-    .rbx-title{ font-size:1.15rem; margin-bottom:12px; }
-    .rbx-group{ margin-bottom:12px; }
-    .rbx-group h3{ font-size:.95rem; color:#ddd; margin-bottom:8px; font-weight:600; }
-
+    /* ROBLOX */
     .rbx-card{
       border:1px solid rgba(255,255,255,0.18);
       background:rgba(255,255,255,0.06);
       padding:12px;
       border-radius:14px;
-      display:flex; align-items:center; justify-content:space-between; gap:12px;
-      cursor:pointer;
-      transition:0.15s;
-      user-select:none;
-      margin-bottom:8px;
+      display:flex; justify-content:space-between;
+      cursor:pointer; margin-bottom:8px;
     }
-    .rbx-card:hover{ background:rgba(255,255,255,0.10); }
-
-    .rbx-user{ display:flex; flex-direction:column; gap:2px; min-width:0; }
-    .rbx-id{ font-size:.85rem; color:#bbb; }
-    .rbx-name{
-      font-size:.98rem; color:#fff;
-      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
-    }
-    .copy-icon{ font-size:1.1rem; color:#fff; flex:0 0 auto; }
-
-    .copied-modal{ text-align:center; }
-    .copied-modal h2{ margin-bottom:0; }
   </style>
 </head>
 
 <body>
 
-  <!-- BACKGROUND MUSIC -->
-  <audio id="bgMusic" src="backgroundmusic.mp3" preload="auto" loop></audio>
+<audio id="bgMusic" src="backgroundmusic.mp3" preload="auto" loop></audio>
 
-  <!-- AUDIO TOGGLE -->
-  <button id="audioToggle" class="audio-toggle hidden" type="button" aria-label="Toggle audio">
-    <i data-feather="volume-2"></i>
-    <span>Sound</span>
-  </button>
+<button id="audioToggle" class="audio-toggle hidden">
+  <i data-feather="volume-2"></i><span>Sound</span>
+</button>
 
-  <!-- MUSIC WARNING MODAL -->
-  <div id="musicModal" class="modal-backdrop">
-    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="musicTitle">
-      <h2 id="musicTitle" class="warning-title">
-        <img src="warning.png" alt="Warning" class="warning-icon">
-        Music Warning
-      </h2>
-      <p>This website contains background music. Choose how you’d like to continue.</p>
-      <div class="btn-row">
-        <button id="continueMuted" class="btn" type="button">Mute audio &amp; continue</button>
-        <button id="continueWithSound" class="btn primary" type="button">Continue</button>
-      </div>
+<!-- MUSIC WARNING -->
+<div id="musicModal" class="modal-backdrop">
+  <div class="modal">
+    <h2 class="warning-title">
+      <img src="warning.png" class="warning-icon"> Music Warning
+    </h2>
+    <p>This website contains background music.</p>
+    <div class="btn-row">
+      <button id="continueMuted" class="btn">Mute audio & continue</button>
+      <button id="continueWithSound" class="btn primary">Continue</button>
+    </div>
+  </div>
+</div>
+
+<!-- LEAVING SITE -->
+<div id="leaveModalBackdrop" class="modal-backdrop hidden">
+  <div class="modal">
+    <h2>You're now leaving this site</h2>
+    <p>All social medias are verified by the host of the domain before publish.</p>
+    <div class="btn-row">
+      <button id="leaveStayBtn" class="btn">Stay</button>
+      <button id="leaveGoBtn" class="btn primary">Continue to site</button>
+    </div>
+  </div>
+</div>
+
+<!-- ROBLOX MODAL -->
+<div id="rbxModalBackdrop" class="modal-backdrop hidden">
+  <div class="modal">
+    <h2>Roblox Accounts</h2>
+
+    <div class="rbx-card" data-copy="7628397273">Thuntc5813 📋</div>
+    <div class="rbx-card" data-copy="1905831731">Minecraftlover_il 📋</div>
+    <div class="rbx-card" data-copy="1036029278">MrRjc13 📋</div>
+
+    <div class="btn-row">
+      <button id="rbxCloseBtn" class="btn">Close</button>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="left">
+    <h1>CrypticNoah</h1>
+    <p>Developer</p>
+
+    <div class="socials">
+      <a class="social-icon leave-link" href="https://www.tiktok.com/@londonguardians"><img src="tiktok.png"></a>
+      <a class="social-text leave-link" href="https://x.com/BloxBriefs">X</a>
+      <button id="rbxOpenBtn" class="social-icon"><img src="roblox.png"></button>
+      <a class="social-icon leave-link" href="mailto:noah@noahrblx.com"><i data-feather="mail"></i></a>
+    </div>
+
+    <div class="skills">
+      <div class="skill">Python</div>
+      <div class="skill">Node.js</div>
     </div>
   </div>
 
-  <!-- LEAVING SITE CONFIRM MODAL -->
-  <div id="leaveModalBackdrop" class="modal-backdrop hidden" aria-hidden="true">
-    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="leaveTitle">
-      <h2 id="leaveTitle">You're now leaving this site</h2>
-      <p>
-        All social medias are verified by the host of the domain before publish, therefore you're safe to leave.
-        This message is to prevent you from being dragged to another site by accident.
-      </p>
-      <div class="btn-row">
-        <button id="leaveStayBtn" class="btn" type="button">Stay</button>
-        <button id="leaveGoBtn" class="btn primary" type="button">Continue to site</button>
-      </div>
-    </div>
+  <div class="right">
+    <img src="avatar.jpg" class="avatar">
   </div>
+</div>
 
-  <!-- ROBLOX ACCOUNTS MODAL -->
-  <div id="rbxModalBackdrop" class="modal-backdrop hidden" aria-hidden="true">
-    <div id="rbxModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="rbxTitle">
-      <h2 id="rbxTitle" class="rbx-title">Roblox Accounts</h2>
-
-      <div class="rbx-group">
-        <h3>Main Account</h3>
-        <div class="rbx-card" data-copy="Thuntc5813">
-          <div class="rbx-user">
-            <div class="rbx-id">7628397273</div>
-            <div class="rbx-name">Thuntc5813</div>
-          </div>
-          <div class="copy-icon">📋</div>
-        </div>
-      </div>
-
-      <div class="rbx-group">
-        <h3>Alternative Account</h3>
-
-        <div class="rbx-card" data-copy="Minecraftlover_il">
-          <div class="rbx-user">
-            <div class="rbx-id">1905831731</div>
-            <div class="rbx-name">Minecraftlover_il</div>
-          </div>
-          <div class="copy-icon">📋</div>
-        </div>
-
-        <div class="rbx-card" data-copy="MrRjc13">
-          <div class="rbx-user">
-            <div class="rbx-id">1036029278</div>
-            <div class="rbx-name">MrRjc13</div>
-          </div>
-          <div class="copy-icon">📋</div>
-        </div>
-      </div>
-
-      <div class="btn-row">
-        <button id="rbxCloseBtn" class="btn" type="button">Close</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- COPIED MODAL -->
-  <div id="copiedModalBackdrop" class="modal-backdrop hidden" aria-hidden="true">
-    <div class="modal copied-modal" role="dialog" aria-modal="true" aria-labelledby="copiedTitle">
-      <h2 id="copiedTitle">Copied to clipboard.</h2>
-      <div class="btn-row" style="justify-content:center; margin-top:14px;">
-        <button id="copiedCloseBtn" class="btn primary" type="button">OK</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- MAIN CONTENT -->
-  <div class="container">
-    <div class="left">
-      <h1>CrypticNoah</h1>
-      <p>Developer</p>
-
-      <div class="socials">
-        <!-- TikTok (opens leaving-site modal) -->
-        <a class="social-icon leave-link"
-           href="https://www.tiktok.com/@londonguardians"
-           target="_blank" rel="noopener noreferrer">
-          <img src="tiktok.png" alt="TikTok">
-        </a>
-
-        <!-- X (opens leaving-site modal) -->
-        <a class="social-text leave-link"
-           href="https://x.com/BloxBriefs"
-           target="_blank" rel="noopener noreferrer">
-          X
-        </a>
-
-        <!-- Roblox (opens accounts modal) -->
-        <button id="rbxOpenBtn" class="social-icon" type="button" aria-haspopup="dialog" aria-label="Roblox Accounts">
-          <img src="roblox.png" alt="Roblox">
-        </button>
-
-        <!-- Email (opens leaving-site modal then mailto) -->
-        <a class="social-icon leave-link"
-           href="mailto:noah@noahrblx.com?subject=Hello%20CrypticNoah&body=Hey%20CrypticNoah%2C%0A%0A"
-           aria-label="Email">
-          <i data-feather="mail"></i>
-        </a>
-      </div>
-
-      <div class="skills">
-        <div class="skill">Python</div>
-        <div class="skill">Node.js</div>
-      </div>
-    </div>
-
-    <div class="right">
-      <img src="avatar.jpg" alt="Avatar" class="avatar">
-    </div>
-  </div>
-
-  <script>
-    feather.replace();
-
-    // ===== MUSIC CONSENT FLOW =====
-    const music = document.getElementById("bgMusic");
-    const musicModal = document.getElementById("musicModal");
-    const toggle = document.getElementById("audioToggle");
-    const allowBtn = document.getElementById("continueWithSound");
-    const muteBtn = document.getElementById("continueMuted");
-
-    let allowed = false;
-
-    function updateToggle() {
-      toggle.innerHTML = music.muted
-        ? '<i data-feather="volume-x"></i><span>Muted</span>'
-        : '<i data-feather="volume-2"></i><span>Sound</span>';
-      feather.replace();
-    }
-
-    allowBtn.onclick = async () => {
-      allowed = true;
-      musicModal.classList.add("hidden");
-      toggle.classList.remove("hidden");
-
-      music.muted = false;
-      music.volume = 0.6;
-
-      try { await music.play(); } catch (e) { music.muted = true; }
-      updateToggle();
-    };
-
-    muteBtn.onclick = () => {
-      allowed = false;
-      musicModal.classList.add("hidden");
-      toggle.classList.remove("hidden");
-
-      music.muted = true;
-      updateToggle();
-    };
-
-    toggle.onclick = async () => {
-      if (!allowed && music.muted) {
-        allowed = true;
-        music.muted = false;
-        try { await music.play(); } catch (e) {}
-      } else {
-        music.muted = !music.muted;
-        if (!music.muted) {
-          try { await music.play(); } catch (e) {}
-        }
-      }
-      updateToggle();
-    };
-
-    music.muted = true;
-    updateToggle();
-
-    // ===== LEAVING SITE SAFETY MODAL =====
-    const leaveBackdrop = document.getElementById("leaveModalBackdrop");
-    const leaveStayBtn = document.getElementById("leaveStayBtn");
-    const leaveGoBtn = document.getElementById("leaveGoBtn");
-
-    let pendingUrl = null;
-
-    function openLeaveModal(url) {
-      pendingUrl = url;
-      leaveBackdrop.classList.remove("hidden");
-      leaveBackdrop.setAttribute("aria-hidden", "false");
-    }
-
-    function closeLeaveModal() {
-      pendingUrl = null;
-      leaveBackdrop.classList.add("hidden");
-      leaveBackdrop.setAttribute("aria-hidden", "true");
-    }
-
-    // Intercept clicks for TikTok / X / Email
-    document.querySelectorAll(".leave-link").forEach(el => {
-      el.addEventListener("click", (e) => {
-        e.preventDefault();
-        const url = el.getAttribute("href");
-        openLeaveModal(url);
-      });
-    });
-
-    leaveStayBtn.addEventListener("click", closeLeaveModal);
-
-    leaveGoBtn.addEventListener("click", () => {
-      if (!pendingUrl) return;
-
-      const url = pendingUrl;
-      closeLeaveModal();
-
-      // If mailto: open same tab
-      if (url.startsWith("mailto:")) {
-        window.location.href = url;
-      } else {
-        window.open(url, "_blank", "noopener,noreferrer");
-      }
-    });
-
-    // Click outside leave modal closes it
-    leaveBackdrop.addEventListener("click", (e) => {
-      const modal = leaveBackdrop.querySelector(".modal");
-      if (!modal.contains(e.target)) closeLeaveModal();
-    });
-
-    // ===== ROBLOX MODALS + COPY =====
-    const rbxOpenBtn = document.getElementById("rbxOpenBtn");
-    const rbxBackdrop = document.getElementById("rbxModalBackdrop");
-    const rbxModal = document.getElementById("rbxModal");
-    const rbxCloseBtn = document.getElementById("rbxCloseBtn");
-
-    const copiedBackdrop = document.getElementById("copiedModalBackdrop");
-    const copiedCloseBtn = document.getElementById("copiedCloseBtn");
-
-    function openRbxModal() {
-      rbxBackdrop.classList.remove("hidden");
-      rbxBackdrop.setAttribute("aria-hidden", "false");
-    }
-
-    function closeRbxModal() {
-      rbxBackdrop.classList.add("hidden");
-      rbxBackdrop.setAttribute("aria-hidden", "true");
-    }
-
-    function openCopiedModal() {
-      copiedBackdrop.classList.remove("hidden");
-      copiedBackdrop.setAttribute("aria-hidden", "false");
-    }
-
-    function closeCopiedModal() {
-      copiedBackdrop.classList.add("hidden");
-      copiedBackdrop.setAttribute("aria-hidden", "true");
-    }
-
-    rbxOpenBtn.addEventListener("click", openRbxModal);
-    rbxCloseBtn.addEventListener("click", closeRbxModal);
-
-    // Click outside Roblox modal closes it
-    rbxBackdrop.addEventListener("click", (e) => {
-      if (!rbxModal.contains(e.target)) closeRbxModal();
-    });
-
-    copiedCloseBtn.addEventListener("click", closeCopiedModal);
-
-    // Clicking anywhere closes copied popup
-    copiedBackdrop.addEventListener("click", () => {
-      closeCopiedModal();
-    });
-
-    async function copyToClipboard(text) {
-      try {
-        await navigator.clipboard.writeText(text);
-        return true;
-      } catch (err) {
-        const ta = document.createElement("textarea");
-        ta.value = text;
-        document.body.appendChild(ta);
-        ta.select();
-        const ok = document.execCommand("copy");
-        document.body.removeChild(ta);
-        return ok;
-      }
-    }
-
-    document.querySelectorAll(".rbx-card").forEach(card => {
-      card.addEventListener("click", async () => {
-        const idToCopy = card.getAttribute("data-copy");
-        await copyToClipboard(idToCopy);
-
-        closeRbxModal();
-        openCopiedModal();
-      });
-    });
-
-    // Esc closes modals
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") {
-        closeLeaveModal();
-        closeRbxModal();
-        closeCopiedModal();
-      }
-    });
-  </script>
+<script>
+  feather.replace();
+</script>
 
 </body>
 </html>
